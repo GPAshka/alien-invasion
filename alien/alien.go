@@ -1,8 +1,11 @@
 package alien
 
+import "alien-invasion/world"
+
 type Alien struct {
 	Id          int
 	MovesNumber int
+	CurrentCity *world.City
 }
 
 type Aliens []*Alien

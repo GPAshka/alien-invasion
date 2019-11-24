@@ -10,7 +10,7 @@ import (
 func main() {
 	//read parameters from the command line
 	inputFileFlag := flag.String("input", "map.txt", "txt file which contains information about world map")
-	aliensNumberFlag := flag.Int("aliens", 10, "Number of aliens")
+	aliensNumberFlag := flag.Int("aliens", 2, "Number of aliens")
 	flag.Parse()
 
 	//open file with input data

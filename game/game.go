@@ -2,12 +2,13 @@ package game
 
 import (
 	"alien-invasion/alien"
+	"alien-invasion/world"
 	"io"
 )
 
 type Game struct {
 	alien.Aliens
-	*Map
+	*world.Map
 }
 
 func NewGame(mapReader io.Reader, aliensNumber int) *Game {
@@ -15,7 +16,7 @@ func NewGame(mapReader io.Reader, aliensNumber int) *Game {
 	aliens := alien.CreateAliens(aliensNumber)
 
 	//create Map
-	m := CreateMap(mapReader)
+	m := world.CreateMap(mapReader)
 
 	game := &Game{Aliens: aliens, Map: m}
 	return game

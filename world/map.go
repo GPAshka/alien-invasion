@@ -1,4 +1,4 @@
-package game
+package world
 
 import (
 	"bufio"
@@ -14,11 +14,6 @@ const (
 	East            = "east"
 	West            = "west"
 )
-
-/*type City struct {
-	Name string
-	Roads []*Road
-}*/
 
 type City string
 
