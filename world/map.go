@@ -36,6 +36,18 @@ func CreateMap(reader io.Reader) *Map {
 	return &m
 }
 
+func (m *Map) GetCities() []City {
+	cities := make([]City, len(*m))
+
+	i := 0
+	for city := range *m {
+		cities[i] = city
+		i++
+	}
+
+	return cities
+}
+
 func (m *Map) addCityFromInputRecord(inputRecord string) {
 	cityWithRoads := strings.Split(inputRecord, " ")
 

@@ -16,13 +16,18 @@ func main() {
 	//open file with input data
 	mapFile, err := os.Open(*inputFileFlag)
 	if err != nil {
-		log.Fatalln("error while opening input CSV file: ", err)
+		log.Fatalln("error while opening input map file: ", err)
 		return
 	}
 	defer closeFile(mapFile)
 
 	//create new game
 	g := game.NewGame(mapFile, *aliensNumberFlag)
+	g.SetAliens()
+
+	for _, alien := range g.Aliens {
+		log.Println(alien.Id, alien.CurrentCity)
+	}
 }
 
 // Close file and logs error if any

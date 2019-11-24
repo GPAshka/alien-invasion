@@ -4,6 +4,8 @@ import (
 	"alien-invasion/alien"
 	"alien-invasion/world"
 	"io"
+	"math/rand"
+	"time"
 )
 
 type Game struct {
@@ -20,4 +22,16 @@ func NewGame(mapReader io.Reader, aliensNumber int) *Game {
 
 	game := &Game{Aliens: aliens, Map: m}
 	return game
+}
+
+func (g *Game) SetAliens() {
+	cities := g.Map.GetCities()
+
+	citiesNumber := len(cities)
+	rand.Seed(time.Now().UnixNano())
+
+	for _, alien := range g.Aliens {
+		i := rand.Intn(citiesNumber)
+		alien.CurrentCity = cities[i]
+	}
 }
