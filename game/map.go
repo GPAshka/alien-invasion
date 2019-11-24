@@ -1,6 +1,7 @@
 package game
 
 import (
+	"bufio"
 	"io"
 	"strings"
 )
@@ -29,14 +30,19 @@ type Road struct {
 type Map map[City][]*Road
 
 func CreateMap(reader io.Reader) *Map {
-	//TODO read map from the file
-
 	m := make(Map, 0)
+
+	scanner := bufio.NewScanner(reader)
+	for scanner.Scan() {
+		line := scanner.Text()
+		m.addCityFromInputRecord(line)
+	}
+
 	return &m
 }
 
-func (m *Map) addCityFromInputRecord(record string) {
-	cityWithRoads := strings.Split(record, " ")
+func (m *Map) addCityFromInputRecord(inputRecord string) {
+	cityWithRoads := strings.Split(inputRecord, " ")
 
 	city := City(cityWithRoads[0])
 	roads := make([]*Road, 0)
