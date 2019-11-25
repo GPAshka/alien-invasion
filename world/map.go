@@ -2,7 +2,9 @@ package world
 
 import (
 	"bufio"
+	"fmt"
 	"io"
+	"log"
 	"strings"
 )
 
@@ -22,7 +24,24 @@ type Road struct {
 	Destination City
 }
 
-type Map map[City][]*Road
+type Roads []*Road
+
+func (road *Road) String() string {
+	return fmt.Sprintf("%s=%s", road.Direction, road.Destination)
+}
+
+func (roads Roads) String() string {
+	str := make([]string, len(roads))
+	i := 0
+	for _, road := range roads {
+		str[i] = road.String()
+		i++
+	}
+
+	return strings.Join(str, " ")
+}
+
+type Map map[City]Roads
 
 func CreateMap(reader io.Reader) *Map {
 	m := make(Map, 0)
@@ -46,6 +65,15 @@ func (m *Map) GetCities() []City {
 	}
 
 	return cities
+}
+
+func (m *Map) Print(writer io.Writer) {
+	for city, roads := range *m {
+		line := fmt.Sprintf("%s %s\n", city, roads.String())
+		if _, err := writer.Write([]byte(line)); err != nil {
+			log.Printf("error while writing city %s information to the output file: %v\n", city, err)
+		}
+	}
 }
 
 func (m *Map) addCityFromInputRecord(inputRecord string) {

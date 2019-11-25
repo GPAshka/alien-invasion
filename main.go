@@ -23,11 +23,21 @@ func main() {
 
 	//create new game
 	g := game.NewGame(mapFile, *aliensNumberFlag)
+
+	//place aliens
 	g.SetAliens()
 
-	for _, alien := range g.Aliens {
-		log.Println(alien.Id, alien.CurrentCity)
+	//main game loop
+	for g.Continue() {
+
 	}
+
+	//output rest of the world
+	g.Map.Print(os.Stdout)
+
+	/*for _, alien := range g.Aliens {
+		log.Println(alien.Id, alien.CurrentCity)
+	}*/
 }
 
 // Close file and logs error if any
