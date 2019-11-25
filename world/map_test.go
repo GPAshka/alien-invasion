@@ -19,6 +19,15 @@ func TestCreateMap(t *testing.T) {
 					{South, City("Qu-ux")}},
 			},
 		},
+		{reader: strings.NewReader(`Foo north=Bar west=Baz 
+Foo south=Qu-ux`),
+			expectedMap: &Map{
+				City("Foo"): []*Road{
+					{North, City("Bar")},
+					{West, City("Baz")},
+					{South, City("Qu-ux")}},
+			},
+		},
 	}
 
 	for i, input := range testCases {

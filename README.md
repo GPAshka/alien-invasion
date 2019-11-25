@@ -14,7 +14,13 @@ Implementation notes:
 he just stays there, he is not destroyed and it's not possible to move it to other city.
 2. It's said that if there are two aliens in one city, they destroy each other and the city.
 But it could happen that there are more than 2 aliens in the same city, and in this case 
-I destroy all aliens and the city.  
+I destroy all aliens and the city.
+3. If city in the input file, all occurrences will be merged in one record (input data example:  
+Foo north=Bar west=Baz   
+Foo south=Qu-ux  
+Result: Map will contain one city Foo with all three directions). However, it;s not checked 
+whether directions for the particular city are not duplicated (for example, if there are two 
+North directions for city Foo).  
 
 Sample input data:  
 Foo​ ​north=Bar​ ​west=Baz​ ​south=Qu-ux  

@@ -119,10 +119,13 @@ func (m *Map) Print(writer io.Writer) {
 }
 
 func (m *Map) addCityFromInputRecord(inputRecord string) {
-	cityWithRoads := strings.Split(inputRecord, " ")
+	cityWithRoads := strings.Split(strings.Trim(inputRecord, " "), " ")
 
 	city := City(cityWithRoads[0])
-	roads := make([]*Road, 0)
+	roads, exists := (*m)[city]
+	if !exists {
+		roads = make([]*Road, 0)
+	}
 
 	//skip first item in the cityWithRoads slice because it is name of the city itself
 	for i := 1; i < len(cityWithRoads); i++ {
