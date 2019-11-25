@@ -5,7 +5,9 @@ import (
 	"fmt"
 	"io"
 	"log"
+	"math/rand"
 	"strings"
+	"time"
 )
 
 type Direction string
@@ -32,6 +34,7 @@ func (road *Road) String() string {
 	return fmt.Sprintf("%s=%s", road.Direction, road.Destination)
 }
 
+//String representation of the city roads array
 func (roads Roads) String() string {
 	str := make([]string, len(roads))
 	i := 0
@@ -41,6 +44,14 @@ func (roads Roads) String() string {
 	}
 
 	return strings.Join(str, " ")
+}
+
+//Get random destination city from all possible direction, which lead out from city
+func (m *Map) GetNextDestinationFromCity(city City) City {
+	roads := (*m)[city]
+	rand.Seed(time.Now().UnixNano())
+	ind := rand.Intn(len(roads))
+	return roads[ind].Destination
 }
 
 //Remove city roads

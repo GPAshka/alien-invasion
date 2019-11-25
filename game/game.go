@@ -24,6 +24,7 @@ func NewGame(mapReader io.Reader, aliensNumber int) *Game {
 	return game
 }
 
+//Randomly set aliens to the cities
 func (g *Game) SetAliens() {
 	cities := g.Map.GetCities()
 
@@ -34,4 +35,19 @@ func (g *Game) SetAliens() {
 		i := rand.Intn(citiesNumber)
 		alien.CurrentCity = cities[i]
 	}
+}
+
+func (g *Game) MoveAliens() {
+	//move each alien to the next city from it's current location using the Map
+	for _, al := range g.Aliens {
+		al.CurrentCity = g.Map.GetNextDestinationFromCity(al.CurrentCity)
+	}
+}
+
+func (g *Game) FightAliens() {
+
+}
+
+func (g *Game) Continue() bool {
+	return false
 }
