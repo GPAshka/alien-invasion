@@ -49,6 +49,12 @@ func (roads Roads) String() string {
 //Get random destination city from all possible direction, which lead out from city
 func (m *Map) GetNextDestinationFromCity(city City) City {
 	roads := (*m)[city]
+
+	//return current city if there are no more roads from it
+	if len(roads) == 0 {
+		return city
+	}
+
 	rand.Seed(time.Now().UnixNano())
 	ind := rand.Intn(len(roads))
 	return roads[ind].Destination

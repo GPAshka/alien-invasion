@@ -2,6 +2,10 @@ package alien
 
 import "alien-invasion/world"
 
+const (
+	movesNumberToFinish = 10000
+)
+
 type Alien struct {
 	MovesNumber int
 	CurrentCity world.City
@@ -22,4 +26,14 @@ func (aliens Aliens) RemoveAliens(ids []int) {
 	for _, id := range ids {
 		delete(aliens, id)
 	}
+}
+
+func (aliens Aliens) EachAlienMadeNeededNumberOfMoves() bool {
+	for _, al := range aliens {
+		if al.MovesNumber < movesNumberToFinish {
+			return false
+		}
+	}
+
+	return true
 }
