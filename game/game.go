@@ -54,11 +54,8 @@ func (g *Game) MoveAliens() {
 //Check if there are cities with at least aliensInCityToFight aliens and make fight for each case
 func (g *Game) FightAliens() {
 	//group aliens by their current city
-	cityGroup := make(map[world.City][]int)
-
-	for id, al := range g.Aliens {
-		cityGroup[al.CurrentCity] = append(cityGroup[al.CurrentCity], id)
-	}
+	//for each city write Id of all aliens in that city
+	cityGroup := g.Aliens.GroupByCity()
 
 	//fight aliens if there are more than aliensInCityToFight aliens in the particular city
 	for city, ids := range cityGroup {
