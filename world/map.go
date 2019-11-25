@@ -26,6 +26,8 @@ type Road struct {
 
 type Roads []*Road
 
+type Map map[City]Roads
+
 func (road *Road) String() string {
 	return fmt.Sprintf("%s=%s", road.Direction, road.Destination)
 }
@@ -41,7 +43,17 @@ func (roads Roads) String() string {
 	return strings.Join(str, " ")
 }
 
-type Map map[City]Roads
+//Remove city roads
+func RemoveCityRoads(roads Roads, city City) Roads {
+	res := make(Roads, 0)
+	for _, road := range roads {
+		if road.Destination != city {
+			res = append(res, road)
+		}
+	}
+
+	return res
+}
 
 func CreateMap(reader io.Reader) *Map {
 	m := make(Map, 0)
@@ -55,6 +67,7 @@ func CreateMap(reader io.Reader) *Map {
 	return &m
 }
 
+// Get all cities on the map
 func (m *Map) GetCities() []City {
 	cities := make([]City, len(*m))
 
@@ -67,6 +80,18 @@ func (m *Map) GetCities() []City {
 	return cities
 }
 
+// Removes city from the map and also any roads​ ​that​ ​lead​ ​into​ ​or​ ​out​ ​of​ ​it.
+func (m *Map) RemoveCity(city City) {
+	//remove city itself
+	delete(*m, city)
+
+	//remove all roads to this city
+	for c, cityRoads := range *m {
+		(*m)[c] = RemoveCityRoads(cityRoads, city)
+	}
+}
+
+// Write map to to the specified writer
 func (m *Map) Print(writer io.Writer) {
 	for city, roads := range *m {
 		line := fmt.Sprintf("%s %s\n", city, roads.String())
